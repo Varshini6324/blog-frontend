@@ -7,7 +7,7 @@ import AddArticle from './components/AddArticle'
 import UserDashboard from './components/UserDashboard'
 import AdminDashboard from './components/AdminDashboard'
 import {Toaster} from 'react-hot-toast'
-import ProtectedRoute from './components/protectedROUTE'
+import ProtectedRoute from './components/ProtectedRoute'
 import ArticleById from './components/ArticleById'
 import ErrorBoundary from './components/ErrorBoundary'
 import AuthorProfile from './components/AuthorProfile'
@@ -15,68 +15,70 @@ import AuthorArticles from './components/AuthorArticles'
 import EditArticle from './components/EditArticle'
 
 function App() {
-  const routerObj=createBrowserRouter([
+  const routerObj = createBrowserRouter([
     {
-      path:"/",
-      element:<RootLayout/>,
-      errorElement:<ErrorBoundary/>,
-      children:[
+      path: '/',
+      element: <RootLayout />,
+      errorElement: <ErrorBoundary />,
+      children: [
         {
-          path:"",
-          element:<Home/>,
-        },
-        {
-          path:"register",
-          element:<Register/>,
+          path: '',
+          element: <Home />,
         },
         {
-          path:"Login",
-          element:<Login/>,
+          path: 'register',
+          element: <Register />,
         },
         {
-          path:"addarticle",
-          element:<AddArticle/>,
+          path: 'login',
+          element: <Login />,
         },
         {
-          path:"userdashboard",
-          element:
-          <ProtectedRoute allowedRoles={["USER"]}>
-            <UserDashboard/>,
-          </ProtectedRoute>
+          path: 'addarticle',
+          element: <AddArticle />,
         },
         {
-          path:"authordashboard",
-          element:
-          <ProtectedRoute  allowedRoles={["AUTHOR"]}>
-            <AuthorProfile/>,
-          </ProtectedRoute>,
-          
+          path: 'userdashboard',
+          element: (
+            <ProtectedRoute allowedRoles={['USER']}>
+              <UserDashboard />
+            </ProtectedRoute>
+          ),
         },
         {
-          path:"admindashboard",
-          element:<AdminDashboard/>,
-        },
-{
-          path:"/article/:id",
-          element:<ArticleById/>
+          path: 'authordashboard',
+          element: (
+            <ProtectedRoute allowedRoles={['AUTHOR']}>
+              <AuthorProfile />
+            </ProtectedRoute>
+          ),
         },
         {
-          path:"/articles",
-          element:<AuthorArticles/>
+          path: 'admindashboard',
+          element: <AdminDashboard />,
         },
-{
-          path:"edit-article/:id",
-          element:<EditArticle/>
-        }
-        
-      ]
+        {
+          path: '/article/:id',
+          element: <ArticleById />,
+        },
+        {
+          path: '/articles',
+          element: <AuthorArticles />,
+        },
+        {
+          path: 'edit-article/:id',
+          element: <EditArticle />,
+        },
+      ],
     },
-
   ])
-  return (<>
-  <Toaster position='top-center' reverseOrder={false}/>
-  <RouterProvider router={routerObj}/>;
-  </>)
+  return (
+    <>
+      <Toaster position="top-center" reverseOrder={false} />
+      <RouterProvider router={routerObj} />
+    </>
+  )
 }
 
 export default App
+
